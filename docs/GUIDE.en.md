@@ -33,7 +33,7 @@ point of using `dload` instead of hand-flashing.
 🖥 A **USB flash drive ≥ 8 GB** formatted **NTFS**, labelled anything, with a folder `dload\` at the root.
 Plus a **USB-C OTG adapter or hub** — this is how the tablet reads the stick:
 
-![USB-C OTG hub](images/otg-hub.jpg)
+![USB-C OTG hub](../images/otg-hub.jpg)
 
 📦 Download and verify (see the hash table in the README):
 
@@ -199,7 +199,7 @@ adb shell settings put global auto_update_apps 0
 
 📱 Open **microG Settings → Self-Check**. Expected:
 
-![microG self-check](images/microg-selfcheck.png)
+![microG self-check](../images/microg-selfcheck.png)
 
 * `System spoofs signature` ✓
 * `microG Services installed` ✓ / `has correct signature` ✓
@@ -212,7 +212,7 @@ Then **Google Accounts → Add account** and sign in. Google may warn
 
 Finally open **Aurora Store** and pick *Google* (uses your microG account) or *Anonymous*:
 
-![Aurora Store](images/aurora-store.png)
+![Aurora Store](../images/aurora-store.png)
 
 ---
 

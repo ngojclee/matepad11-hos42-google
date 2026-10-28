@@ -32,7 +32,7 @@ Trình nạp chính hãng (`dload`) tự đổi bảng phân vùng — đó là 
 🖥 USB ≥ 8 GB, format **NTFS**, có thư mục `dload\` ở gốc. Cần thêm **đầu chuyển/hub USB-C OTG**
 để tablet đọc được USB:
 
-![Hub USB-C OTG](images/otg-hub.jpg)
+![Hub USB-C OTG](../images/otg-hub.jpg)
 
 📦 Tải và kiểm hash (bảng hash ở README):
 
@@ -191,7 +191,7 @@ adb shell settings put global auto_update_apps 0
 
 📱 Mở **microG Settings → Self-Check**:
 
-![microG self-check](images/microg-selfcheck.png)
+![microG self-check](../images/microg-selfcheck.png)
 
 * `System spoofs signature` ✓
 * `microG Services installed` ✓ / `has correct signature` ✓
@@ -204,7 +204,7 @@ Tiếp theo **Google Accounts → Add account** và đăng nhập. Nếu Google 
 
 Cuối cùng mở **Aurora Store**, chọn *Google* (dùng tài khoản microG) hoặc *Anonymous*:
 
-![Aurora Store](images/aurora-store.png)
+![Aurora Store](../images/aurora-store.png)
 
 ---
 

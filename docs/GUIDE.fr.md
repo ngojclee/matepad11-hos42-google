@@ -34,7 +34,7 @@ qui repartitionne — d'où l'intérêt de passer par lui plutôt que par un fla
 🖥 Clé USB ≥ 8 Go formatée en **NTFS**, avec un dossier `dload\` à la racine.
 Il faut aussi un **adaptateur ou hub USB-C OTG** pour que la tablette lise la clé :
 
-![Hub USB-C OTG](images/otg-hub.jpg)
+![Hub USB-C OTG](../images/otg-hub.jpg)
 
 📦 À télécharger et vérifier (tableau des empreintes dans le README) :
 
@@ -197,7 +197,7 @@ adb shell settings put global auto_update_apps 0
 
 📱 Ouvrez **microG Settings → Self-Check** :
 
-![Self-check microG](images/microg-selfcheck.png)
+![Self-check microG](../images/microg-selfcheck.png)
 
 * `System spoofs signature` ✓
 * `microG Services installed` ✓ / `has correct signature` ✓
@@ -210,7 +210,7 @@ Ensuite **Google Accounts → Add account** et connectez-vous. Si Google affiche
 
 Enfin ouvrez **Aurora Store** et choisissez *Google* (compte microG) ou *Anonymous* :
 
-![Aurora Store](images/aurora-store.png)
+![Aurora Store](../images/aurora-store.png)
 
 ---
 

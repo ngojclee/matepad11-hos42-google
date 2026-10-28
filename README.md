@@ -49,7 +49,7 @@ After  : DBY-W09   4.2.0.208  (C00E100)    · Android 12 · unlocked bootloader 
 
 The **bootloader-side binaries** (`abl_hw865870unlock.elf`, `dbyprog_emmc_firehose`,
 `blank_oeminfo.img`, `bootHMOS4.2.img`) are attached to the
-[latest release](https://github.com/ngojclee/matepad11-hos42-google/releases/latest)
+[binaries release](https://github.com/ngojclee/matepad11-hos42-google/releases/tag/binaries)
 so you do not have to hunt for them.
 
 Firmware packages are **not** redistributed (GitHub caps a release asset at 2 GB and the base package

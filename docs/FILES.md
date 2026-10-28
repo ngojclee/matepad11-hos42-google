@@ -25,7 +25,7 @@ through *Firm Finder* (model `DBY_W09`, region `C432`, HarmonyOS 2).
 | `blank_oeminfo.img` | 100 663 296 B | `3388E81D7056DC3C01DB6E20B195DBF9659CFF346E5A2411DEA470B277E387AC` | `firmware\` — erases the C432 region identity |
 | `bootHMOS4.2.img` | 100 663 296 B | *(only needed for APatch root)* | `firmware\` — stock 4.2 boot image to patch |
 
-These four are attached to the **latest release** of this repository.
+These four are attached to the permanent **inaries release**: https://github.com/ngojclee/matepad11-hos42-google/releases/tag/binaries
 
 ## 2. HarmonyOS 4.2 China — HOTA packages (from Huawei's CDN)
 

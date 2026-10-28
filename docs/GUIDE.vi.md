@@ -22,6 +22,39 @@ Quy ước: 🖥 = làm trên PC, 📱 = làm trên tablet.
 Chặng C là **bắt buộc**: máy C432 không chịu boot hệ CN, và layout phân vùng của 4.2 khác HOS 2.
 Trình nạp chính hãng (`dload`) tự đổi bảng phân vùng — đó là lý do phải dùng nó thay vì flash tay.
 
+## 0b. Chặng 0 — hạ HarmonyOS 3 → 2.0.0.278 (C432)
+
+**Chỉ cần nếu máy đang ở HOS 3.x.** Trên `3.0.0.216`, `adb reboot edl` **không hoạt động** nên
+không vào được EDL, toàn bộ quy trình bị chặn. Hai cách hạ:
+
+### A. HiSuite (chính hãng, ~30 phút)
+
+1. Cài HiSuite trên Windows, bật HDB/Gỡ lỗi USB trên tablet, cắm cáp.
+2. HiSuite → **Cập nhật hệ thống** → **Chuyển sang phiên bản khác** → chọn `2.0.0.278 (C432E2R2P1)`.
+3. Để nó tải (~4,2 GB) và flash. Máy khởi động lại vào HOS 2.
+
+Kinh nghiệm thực tế:
+
+* Nếu HiSuite báo **"Không có internet"**, thử lại qua VPN Trung Quốc — danh mục cập nhật phục vụ từ CN.
+* HiSuite **xoá gói ROM** trong `Documents\HiSuite\ROM\` sau mỗi lần chạy. Giữ một bản copy
+  (`Documents\HiSuite\ROM_backup\update_full_base.zip.dbk`, 4 205 754 241 B,
+  `FB8C26238FA547C51AFBC17598BE67BD9117392A2EBC9ECCB92B16FD657C6778`) rồi copy lại vào `ROM\`
+  để lần sau khỏi tải lại 4,2 GB.
+* Khi HiSuite đang mở, nó giữ thiết bị qua `hwtransport.exe` + `hdbtransport.exe`; `adb` và
+  `fastboot` sẽ không thấy máy cho tới khi tắt cả hai process đó.
+
+### B. dload với gói SD của C432
+
+Giống hệt Chặng C nhưng dùng bộ **C432** `update_sd_*`: chép vào `dload\` trên USB, vào Recovery,
+chọn *Update mode → Memory card/OTG update*.
+
+### Kiểm tra
+
+```powershell
+adb shell getprop ro.build.display.id     # DBY-W09S 2.0.0.278(C432E2R2P1)
+adb reboot edl                            # phải vào 9008 — trên HOS 3.0.0.216 thì không
+```
+
 ---
 
 ## 1. Chuẩn bị

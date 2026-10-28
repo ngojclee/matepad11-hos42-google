@@ -23,6 +23,39 @@ Stage C is mandatory: a C432 device refuses to boot a CN system, and the 4.2 par
 differs from the HOS 2 one. The stock updater does the repartitioning for you — that is the whole
 point of using `dload` instead of hand-flashing.
 
+## 0b. Stage 0 — downgrade HarmonyOS 3 → 2.0.0.278 (C432)
+
+**Only if your tablet is on HOS 3.x.** `adb reboot edl` does not work on `3.0.0.216`, so EDL is
+unreachable and everything else is blocked. Two ways down:
+
+### A. HiSuite (official, ~30 min)
+
+1. Install HiSuite on Windows, enable HDB/USB debugging on the tablet, connect it.
+2. HiSuite → **System update** → **Switch to another version** → pick `2.0.0.278 (C432E2R2P1)`.
+3. Let it download (~4.2 GB) and flash. The tablet reboots into HOS 2.
+
+Field notes:
+
+* If HiSuite answers **"No internet"**, retry through a Chinese VPN — the update index is served from CN.
+* HiSuite **deletes the package** from `Documents\HiSuite\ROM\` after every attempt. Keep a copy
+  (`Documents\HiSuite\ROM_backup\update_full_base.zip.dbk`, 4 205 754 241 B,
+  `FB8C26238FA547C51AFBC17598BE67BD9117392A2EBC9ECCB92B16FD657C6778`) and copy it back into
+  `ROM\` to skip the 4.2 GB download on the next run.
+* While HiSuite runs it holds the tablet through `hwtransport.exe` + `hdbtransport.exe`; `adb` and
+  `fastboot` see nothing until both processes are stopped.
+
+### B. dload with the C432 SD package
+
+Identical to Stage C, but with the **C432** `update_sd_*` packages: copy them into `dload\` on the USB
+stick, boot to Recovery, *Update mode → Memory card/OTG update*.
+
+### Verify
+
+```powershell
+adb shell getprop ro.build.display.id     # DBY-W09S 2.0.0.278(C432E2R2P1)
+adb reboot edl                            # must enter 9008 — it does not on HOS 3.0.0.216
+```
+
 ---
 
 ## 1. Prerequisites

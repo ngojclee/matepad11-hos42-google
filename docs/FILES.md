@@ -3,6 +3,19 @@
 Everything the procedure consumes, in the order it is used. Verify every SHA-256 before flashing:
 `Get-FileHash <file> -Algorithm SHA256`.
 
+## 0. HarmonyOS 2 C432 package (downgrade stage only)
+
+Needed when the tablet is still on HOS 3.x — see the "Stage 0" section of the guide.
+
+| File | Size | SHA-256 |
+|---|---|---|
+| `update_full_base.zip.dbk` | 4 205 754 241 B | `FB8C26238FA547C51AFBC17598BE67BD9117392A2EBC9ECCB92B16FD657C6778` |
+
+HiSuite fetches this by itself when you choose *Switch to another version → 2.0.0.278 (C432E2R2P1)*.
+It **deletes** the file from `%USERPROFILE%\Documents\HiSuite\ROM\` after each attempt, so keep a copy
+and drop it back into `ROM\` to skip the 4.2 GB download next time. The same package can be obtained
+through *Firm Finder* (model `DBY_W09`, region `C432`, HarmonyOS 2).
+
 ## 1. Bootloader-side binaries (small, hard to find)
 
 | File | Size | SHA-256 | Where it goes |

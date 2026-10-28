@@ -16,6 +16,17 @@ It **deletes** the file from `%USERPROFILE%\Documents\HiSuite\ROM\` after each a
 and drop it back into `ROM\` to skip the 4.2 GB download next time. The same package can be obtained
 through *Firm Finder* (model `DBY_W09`, region `C432`, HarmonyOS 2).
 
+It is also mirrored, split into three parts, on the **`firmware`** release:
+
+```
+update_full_base.zip.dbk.part01 .. part03
+```
+
+```powershell
+.\scripts\join-firmware.ps1 -Parts .\parts\c432 -Out .\update_full_base.zip.dbk
+# expected SHA-256: FB8C26238FA547C51AFBC17598BE67BD9117392A2EBC9ECCB92B16FD657C6778
+```
+
 ## 1. Bootloader-side binaries (small, hard to find)
 
 | File | Size | SHA-256 | Where it goes |

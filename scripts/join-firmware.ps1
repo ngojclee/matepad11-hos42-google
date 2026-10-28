@@ -19,6 +19,7 @@ $known = @{
     'update_sd_base.zip'                         = 'A27C37D782409DCF30F86E1AE3599E00ACF2E7CA122D1C33F9EE201E59EE4B40'
     'update_sd_cust_DBY-W09_all_cn.zip'          = '3382AC6155D9919F85703CFD4C051007CDE95937480AD7451552360256546B1F'
     'update_sd_preload_DBY-W09_all_cn_R5.zip'    = '832735F4DA7615DE6E2C2D5CE71979282A1C078E9CEE1E561751EF066EB31E48'
+    'update_full_base.zip.dbk'                     = 'FB8C26238FA547C51AFBC17598BE67BD9117392A2EBC9ECCB92B16FD657C6778'
 }
 
 if (-not (Test-Path $Parts)) { throw "parts folder not found: $Parts" }

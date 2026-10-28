@@ -1,0 +1,53 @@
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build tool bundle
+        shell: pwsh
+        run: |
+          $name = "matepad11-hos42-tools-${{ github.ref_name }}"
+          $stage = "dist/$name"
+          New-Item -ItemType Directory -Force -Path $stage | Out-Null
+          Copy-Item README.md, LICENSE -Destination $stage
+          Copy-Item -Recurse docs, scripts -Destination $stage
+          New-Item -ItemType Directory -Force -Path "$stage/images" | Out-Null
+          Copy-Item images/*.png -Destination "$stage/images" -ErrorAction SilentlyContinue
+          Compress-Archive -Path "$stage/*" -DestinationPath "dist/$name.zip" -Force
+
+      - name: Checksums
+        shell: pwsh
+        run: |
+          Get-ChildItem dist -Filter *.zip | ForEach-Object {
+            $h = (Get-FileHash $_.FullName -Algorithm SHA256).Hash
+            "$h  $($_.Name)" | Out-File -Append -Encoding utf8 dist/SHA256SUMS.txt
+          }
+          Get-Content dist/SHA256SUMS.txt
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.zip
+            dist/SHA256SUMS.txt
+          draft: false
+          generate_release_notes: true
+          body: |
+            Scripts and guides for turning a Huawei MatePad 11 (DBY-W09) into
+            HarmonyOS 4.2 C00 with microG.
+
+            Firmware packages are **not** included — download them from Huawei and
+            verify the SHA-256 table in the README.
+
+            Read `docs/GUIDE.<lang>.md` before running anything.

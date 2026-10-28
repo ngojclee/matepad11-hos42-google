@@ -1,0 +1,26 @@
+# nothing that contains personal data or vendor firmware
+*.zip
+*.img
+*.elf
+*.APP
+*.dbk
+*.7z
+backup*/
+work/
+stage/
+dist/
+*.log
+*.bin
+
+# tooling
+edl/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# local config
+config.ps1
+.env

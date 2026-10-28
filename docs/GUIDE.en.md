@@ -214,6 +214,23 @@ Finally open **Aurora Store** and pick *Google* (uses your microG account) or *A
 
 ![Aurora Store](../images/aurora-store.png)
 
+### Optional: a real keyboard (Gboard)
+
+The stock keyboard is weak. Aurora can install Google's Gboard (a split APK, so let Aurora handle it):
+
+1. Aurora Store → search **Gboard** → **Install** (Huawei asks to confirm the install).
+2. Then make it the default IME:
+
+```powershell
+adb shell ime enable com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME
+adb shell ime set    com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME
+adb shell settings get secure default_input_method   # must print the LatinIME id
+```
+
+3. Gboard → **Languages → Add keyboard** to add your language (e.g. `Tiếng Việt` → Telex).
+
+Tested with Gboard 18.5.4 on this tablet.
+
 ---
 
 ## 8. Optional: root (APatch)

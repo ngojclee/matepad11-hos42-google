@@ -206,6 +206,23 @@ Cuối cùng mở **Aurora Store**, chọn *Google* (dùng tài khoản microG) 
 
 ![Aurora Store](../images/aurora-store.png)
 
+### Tuỳ chọn: bàn phím Gboard
+
+Bàn phím gốc của Huawei khá yếu. Cài Gboard qua Aurora (APK split, để Aurora tự xử lý):
+
+1. Aurora Store → tìm **Gboard** → **Install** (Huawei sẽ hỏi xác nhận cài đặt).
+2. Đặt làm bàn phím mặc định:
+
+```powershell
+adb shell ime enable com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME
+adb shell ime set    com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME
+adb shell settings get secure default_input_method   # phải in ra id LatinIME
+```
+
+3. Gboard → **Languages → Add keyboard** → thêm `Tiếng Việt` → chọn **Telex**.
+
+Đã thử với Gboard 18.5.4 trên máy này.
+
 ---
 
 ## 8. Tuỳ chọn: root (APatch)

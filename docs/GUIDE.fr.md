@@ -212,6 +212,23 @@ Enfin ouvrez **Aurora Store** et choisissez *Google* (compte microG) ou *Anonymo
 
 ![Aurora Store](../images/aurora-store.png)
 
+### Option : un vrai clavier (Gboard)
+
+Le clavier d'origine est médiocre. Installez Gboard via Aurora (APK split, laissez Aurora gérer) :
+
+1. Aurora Store → rechercher **Gboard** → **Install** (Huawei demande une confirmation).
+2. Définissez-le comme clavier par défaut :
+
+```powershell
+adb shell ime enable com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME
+adb shell ime set    com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME
+adb shell settings get secure default_input_method   # doit afficher l'id LatinIME
+```
+
+3. Gboard → **Languages → Add keyboard** pour ajouter votre langue (ex. `Français` AZERTY).
+
+Testé avec Gboard 18.5.4 sur cette tablette.
+
 ---
 
 ## 8. Option — root (APatch)

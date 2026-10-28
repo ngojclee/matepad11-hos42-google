@@ -45,8 +45,16 @@ After  : DBY-W09   4.2.0.208  (C00E100)    · Android 12 · unlocked bootloader 
 
 ### Files and where they come from
 
-This repository ships the **scripts** and the **two small bootloader-side binaries**.
-Firmware packages are **not** redistributed — download them from Huawei's CDN and verify the hashes.
+👉 **Full table with every source URL, size and SHA-256: [docs/FILES.md](docs/FILES.md)**
+
+The **bootloader-side binaries** (`abl_hw865870unlock.elf`, `dbyprog_emmc_firehose`,
+`blank_oeminfo.img`, `bootHMOS4.2.img`) are attached to the
+[latest release](https://github.com/ngojclee/matepad11-hos42-google/releases/latest)
+so you do not have to hunt for them.
+
+Firmware packages are **not** redistributed (GitHub caps a release asset at 2 GB and the base package
+is 4.8 GB). `scripts/download.ps1` pulls them from Huawei's CDN with resume, parallel ranges and
+hash verification — the URL is in `FILES.md`, so nothing to search for.
 
 | File | Size | SHA-256 |
 |---|---|---|

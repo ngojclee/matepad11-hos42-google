@@ -45,6 +45,30 @@ http://update.dbankcdn.com/download/data/pub_13/HWHOTA_hota_900_9/9b/v3/EcY-XW4R
 http://update.dbankcdn.com/download/data/pub_13/HWHOTA_hota_900_9/94/v3/Wbkd1I4_SWOtYB4jX0ycDg/full/update_full_preload_DBY-W09_all_cn_R1.zip
 ```
 
+### Mirror: the base package split into parts
+
+Because GitHub caps a single asset at 2 GB, the 4.78 GB base package is also published as four
+1.5 GB parts on the **`firmware`** release
+(<https://github.com/ngojclee/matepad11-hos42-google/releases/tag/firmware>):
+
+```
+update_full_base.zip.part01 .. part04
+update_sd_base.zip.part01   .. part03      (the dload package, same reason)
+```
+
+The other packages (cust 379 KB, preload 840 MB) fit directly and are attached to the same release.
+
+Reassemble — the script knows the official hashes:
+
+```powershell
+.\scripts\join-firmware.ps1 -Parts .\parts\hotabase -Out .\update_full_base.zip
+.\scripts\join-firmware.ps1 -Parts .\parts\dloadbase -Out .\update_sd_base.zip
+```
+
+> Do **not** extract these to host them elsewhere: `update_full_base.zip` is 4.78 GB but the
+> `UPDATE.APP` inside is 6.07 GB, i.e. the archive is already the smallest form. The scripts
+> extract only what they need, when they need it.
+
 > Huawei's CDN throttles a single long transfer after ~1 GB. `scripts/download.ps1` splits the file
 > into 64 MiB ranges and downloads six at a time: 4.8 GB in ~3 minutes instead of ~50.
 

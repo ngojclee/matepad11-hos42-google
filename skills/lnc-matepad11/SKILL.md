@@ -17,7 +17,7 @@ Target hardware: **Huawei MatePad 11 (2021)**, model `DBY-W09` / `DBY-W09S`, Qua
 | Item | Value |
 |---|---|
 | Start | `DBY-W09S 2.0.0.278 (C432E2R2P1)` — Android 10, bootloader locked |
-| End | `DBY-W09 4.2.0.208 (C00E100)` — Android 12, bootloader **unlocked**, microG (+ signature spoofing) |
+| End | `DBY-W09 4.2.0.208 (C00E100)` — Android 12, bootloader **unlocked**, microG (+ signature spoofing), APatch root, 30 Huawei packages removed |
 | Duration | ~2 h, most of it copying and waiting |
 | Safety net | full EDL backup (91 files / 12.87 GB, `userdata` excluded) |
 
@@ -113,3 +113,56 @@ updater must repartition first, and the region identity must be neutralised:
 APatch works on **HOS 4.2** (the `boot` image carries a ramdisk). It does **not** work on
 HOS 2, where Huawei splits kernel (`boot`) and ramdisk (`ramdisk` partition) — there is no
 place for the userspace daemon. Root is **not** required for microG.
+
+## 7. Aurora Store + microG on HOS 4.2 (live notes, 2026-10-29)
+
+**Versions.** 4.8.4 (76) is the current release and runs on this ROM *after* Google login; a fresh
+install as Anonymous crashed in Compose (`Key "com.outfit7.talkingtomgoldrun" was already used`).
+4.8.3 (75) and 4.8.0 (72) are safe fallbacks. Install with root to skip Huawei's installer UI:
+
+```powershell
+adb push AuroraStore.apk /data/local/tmp/aurora.apk
+adb shell "su -c 'pm uninstall com.aurora.store'"        # only when downgrading
+adb shell "su -c 'pm install -g /data/local/tmp/aurora.apk'"
+```
+
+**Aurora's Google login hangs on a spinner.** It asks microG for a Play Store token as
+`com.android.vending`, and microG must show a one-time consent (`AskPackageOverrideActivity`).
+That activity is declared `not exported`, so Aurora cannot launch it — the log shows
+`SecurityException: … not exported from uid 10196` and the request silently returns to the login
+screen. The consent is stored as account user data:
+
+```
+override.<pkg>:<sha256 app cert>:<override pkg>:<sha256 override cert> = "1"
+```
+
+Uninstalling Aurora (or changing the APK signer) removes it. Re-grant without any UI:
+
+1. SHA-256 of the app signing cert (parse `META-INF/*.RSA` or the v3 signing block) and SHA-256 of the
+   `overrideCertificate=[…]` byte array printed by `adb shell dumpsys account` for an auth attempt.
+2. `adb shell "su -c stop"` — adb stays alive.
+3. Pull `/data/system_ce/0/accounts_ce.db` (Huawei/Android 12 uses `accounts_ce.db`).
+4. On the PC:
+
+```sql
+INSERT INTO extras (accounts_id, key, value)
+VALUES ((SELECT _id FROM accounts WHERE type='com.google'),
+        'override.com.aurora.store:<shaA>:com.android.vending:<shaB>', '1');
+```
+
+The column is `accounts_id`; digests are lowercase hex without separators.
+
+5. Push back, `chown system:system`, `chmod 660`, `restorecon`, delete `-wal`/`-shm`, `adb reboot`.
+
+**Never "update" Google Play services / Play Store from Aurora.** `com.google.android.gms` is microG
+spoofing GMS; installing the real package conflicts with microG's signature, and uninstalling microG
+to make room removes Google entirely.
+
+**Installer prompt.** The CN ROM routes every non-system installer through AppGallery's
+`InstallDistActivity` risk check, so Aurora installs can still require CONTINUE/INSTALL. Installing
+from a PC with `su -c 'pm install -r -g'` does not (~11 s/app). Making Aurora a system app would
+remove the prompt, but the APatch module format is unverified and a bad module can bootloop.
+
+**Colour flash at boot.** A solid green/pink/blue screen appears before the OS logo — it is display
+init / framebuffer, not the boot animation (`bootanimation.zip` is black frames + the OpenHarmony
+logo). Harmless.
